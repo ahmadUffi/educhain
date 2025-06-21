@@ -1,41 +1,72 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Icon from "components/AppIcon";
-import Image from "components/AppImage";
-import WalletHeader from "components/ui/WalletHeader";
-import RoleBasedNavigation from "components/ui/RoleBasedNavigation";
-import ProgressIndicator from "components/ui/ProgressIndicator";
+import { useRouter } from "next/navigation";
+import Icon from "../components/AppIcon";
+import Image from "../components/AppImage";
+import WalletHeader from "../components/ui/WalletHeader";
+import RoleBasedNavigation from "../components/ui/RoleBasedNavigation";
+import ProgressIndicator from "../components/ui/ProgressIndicator";
 
-import DailyMissionCard from "./components/DailyMissionCard";
-import ProgressStats from "./components/ProgressStats";
-import QuickFilters from "./components/QuickFilters";
-import RecentAchievements from "./components/RecentAchievements";
+import DailyMissionCard from "../components/studentDashboard/DailyMissionCard";
+import ProgressStats from "../components/studentDashboard/ProgressStats";
+import QuickFilters from "../components/studentDashboard/QuickFilters";
+import RecentAchievements from "../components/studentDashboard/RecentAchievements";
 
-import { mockAchievements, mockMissions } from "./mock";
+import { mockAchievements, mockMissions, mockStudentData } from "./mock";
 
 const StudentDashboard = () => {
-  const navigate = useNavigate();
+  type Mission = {
+    id: number;
+    title: string;
+    description: string;
+    teacher: string;
+    course: string;
+    courseColor: string;
+    points: number;
+    deadline: Date;
+    status: string;
+    difficulty: string;
+    estimatedTime: string;
+    type: string;
+    completedAt?: Date;
+    submissions?: number;
+    maxSubmissions?: number;
+  };
+
+  type StudentData = {
+    name: string;
+    avatar: string;
+    walletAddress: string;
+    balance: number;
+    totalPoints: number;
+    dailyGoal: number;
+    completedToday: number;
+    streak: number;
+    level: number;
+    nextLevelPoints: number;
+    enrolledCourses: number;
+    totalTasksCompleted: number;
+  };
+
+  const navigate = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
-  const [missions, setMissions] = useState([]);
-  const [studentData, setStudentData] = useState({});
+  const [missions, setMissions] = useState<Mission[]>([]);
+  const [studentData, setStudentData] = useState<StudentData>({
+    name: "",
+    avatar: "",
+    walletAddress: "",
+    balance: 0,
+    totalPoints: 0,
+    dailyGoal: 0,
+    completedToday: 0,
+    streak: 0,
+    level: 0,
+    nextLevelPoints: 0,
+    enrolledCourses: 0,
+    totalTasksCompleted: 0,
+  });
 
   // Mock student data
-  const mockStudentData = {
-    name: "Alex Johnson",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    walletAddress: "0x742d35Cc6634C0532925a3b8D4C0532925a3b8D4",
-    balance: 2.4567,
-    totalPoints: 1250,
-    dailyGoal: 5,
-    completedToday: 3,
-    streak: 7,
-    level: 12,
-    nextLevelPoints: 1500,
-    enrolledCourses: 4,
-    totalTasksCompleted: 89,
-  };
 
   useEffect(() => {
     setStudentData(mockStudentData);
@@ -50,8 +81,8 @@ const StudentDashboard = () => {
     }, 1000);
   };
 
-  const handleMissionClick = (mission) => {
-    navigate("/task-completion-interface", { state: { mission } });
+  const handleMissionClick = (mission: Mission) => {
+    navigate.push(`/task-completion-interface?id=${mission.id}`);
   };
 
   const handleEnrollCourse = () => {

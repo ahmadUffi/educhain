@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Icon from "@/app/components/AppIcon";
-import WalletConnectionModal from "./components/WalletConnectionModal";
-import RoleSelectionModal from "./components/RoleSelectionModal";
-import Web3Tooltip from "./components/Web3Tooltip";
+import WalletConnectionModal from "../components/walletConection/WalletConnectionModal";
+import RoleSelectionModal from "../components/walletConection/RoleSelectionModal";
+import Web3Tooltip from "../components/walletConection/Web3Tooltip";
 
 // interface wallet address
 interface WalletAddress {

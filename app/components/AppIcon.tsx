@@ -6,7 +6,7 @@ import { HelpCircle } from "lucide-react";
 type LucideIconName = keyof typeof LucideIcons;
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
-  name: LucideIconName; // hanya boleh pakai icon yang ada di Lucide
+  name: string; // hanya boleh pakai icon yang ada di Lucide
   size?: number;
   color?: string;
   className?: string;

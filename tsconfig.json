@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/wallet-connection-role-selection/components/Web3Tooltip.jsx"
+    "app/components/walletConection/components/Web3Tooltip.jsx"
   ],
   "exclude": ["node_modules"]
 }
